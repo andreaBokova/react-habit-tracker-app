@@ -1,3 +1,5 @@
+import { Button } from "./Button";
+import { endOfWeek, startOfWeek, eachDayOfInterval, format } from "date-fns";
 
 export function HabitList() {
   const habits = [
@@ -18,15 +20,27 @@ type HabitItemProps = {
 };
 
 function HabitItem({ habit }: HabitItemProps) {
+  const visibleDates = eachDayOfInterval({
+    start: startOfWeek(new Date(), {weekStartsOn: 1}),
+    end: endOfWeek(new Date(), {weekStartsOn: 1}),
+  });
+
   return (
-    <div className="bg-gray-800">
-      <div className="bg-red-500 flex items-center flex-row gap-4">
-        <span>{habit.name}</span>
-        <span>Streak: {habit.streak}</span>
+    <div className="bg-gray-800 rounded-2xl p-3 flex flex-col gap-2">
+      <div className="flex flex-row gap-4 justify-between bg-pink-500 items-center">
+        <span className="font-medium">{habit.name}</span>
+        <span className="text-sm">Streak: {habit.streak}</span>
+        {/* <Button text="Delete" className="bg-green-300 ml-auto" /> */}
         <button className="bg-green-300 ml-auto">Delete</button>
       </div>
-      <div className="flex justify-evenly gap-6">
-        <div className="rounded-xl bg-pink-200 px-2 flex flex-col text-center">
+      <div className="flex items-center justify-between">
+        {visibleDates.map((date) => (
+          <div className="rounded-xl bg-pink-200 px-2 flex flex-col text-center">
+            <span>{format(date, "eee")}</span>
+            <span>{format(date, "d")}</span>
+          </div>
+        ))}
+        {/* <div className="rounded-xl bg-pink-200 px-2 flex flex-col text-center">
           <span>Mon</span>
           <span>6</span>
         </div>
@@ -35,7 +49,7 @@ function HabitItem({ habit }: HabitItemProps) {
         <div>Thu</div>
         <div>Fri</div>
         <div>Sat</div>
-        <div>Sun</div>
+        <div>Sun</div> */}
       </div>
     </div>
   );
