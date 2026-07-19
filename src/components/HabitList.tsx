@@ -27,29 +27,20 @@ function HabitItem({ habit }: HabitItemProps) {
 
   return (
     <div className="bg-gray-800 rounded-2xl p-3 flex flex-col gap-2">
-      <div className="flex flex-row gap-4 justify-between bg-pink-500 items-center">
+      <div className="flex flex-row gap-4 justify-between items-center">
         <span className="font-medium">{habit.name}</span>
         <span className="text-sm">Streak: {habit.streak}</span>
-        {/* <Button text="Delete" className="bg-green-300 ml-auto" /> */}
-        <button className="bg-green-300 ml-auto">Delete</button>
+        <Button text="Delete" variant="delete" className="text-black ml-auto"/>
+
       </div>
       <div className="flex items-center justify-between">
         {visibleDates.map((date) => (
-          <div className="rounded-xl bg-pink-200 px-2 flex flex-col text-center">
+          <div className="rounded-xl bg-zinc-700 px-6 flex flex-col text-center">
             <span>{format(date, "eee")}</span>
             <span>{format(date, "d")}</span>
           </div>
         ))}
-        {/* <div className="rounded-xl bg-pink-200 px-2 flex flex-col text-center">
-          <span>Mon</span>
-          <span>6</span>
-        </div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
-        <div>Sun</div> */}
+        
       </div>
     </div>
   );
