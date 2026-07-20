@@ -1,5 +1,11 @@
 import { Button } from "./Button";
-import { endOfWeek, startOfWeek, eachDayOfInterval, format } from "date-fns";
+import {
+  endOfWeek,
+  startOfWeek,
+  eachDayOfInterval,
+  format,
+  isFuture,
+} from "date-fns";
 
 export function HabitList() {
   const habits = [
@@ -21,8 +27,8 @@ type HabitItemProps = {
 
 function HabitItem({ habit }: HabitItemProps) {
   const visibleDates = eachDayOfInterval({
-    start: startOfWeek(new Date(), {weekStartsOn: 1}),
-    end: endOfWeek(new Date(), {weekStartsOn: 1}),
+    start: startOfWeek(new Date(), { weekStartsOn: 1 }),
+    end: endOfWeek(new Date(), { weekStartsOn: 1 }),
   });
 
   return (
@@ -30,17 +36,22 @@ function HabitItem({ habit }: HabitItemProps) {
       <div className="flex flex-row gap-4 justify-between items-center">
         <span className="font-medium">{habit.name}</span>
         <span className="text-sm">Streak: {habit.streak}</span>
-        <Button text="Delete" variant="delete" className="text-black ml-auto"/>
-
+        <Button variant="delete" className="text-black ml-auto">
+          Delete
+        </Button>
       </div>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-row flex-wrap gap-1">
         {visibleDates.map((date) => (
-          <div className="rounded-xl bg-zinc-700 px-6 flex flex-col text-center">
+          <Button
+            disabled={isFuture(date)}
+            className="flex min-w-10 flex-col flex-1 rounded-xl px-2 text-center"
+            variant={"days"}
+            key={date.toISOString()}
+          >
             <span>{format(date, "eee")}</span>
             <span>{format(date, "d")}</span>
-          </div>
+          </Button>
         ))}
-        
       </div>
     </div>
   );

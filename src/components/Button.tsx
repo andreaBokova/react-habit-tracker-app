@@ -1,14 +1,12 @@
 import { twMerge } from "tailwind-merge";
 
-type Variant = "primary" | "secondary" | "delete";
+type Variant = "primary" | "secondary" | "delete" | "days";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  text: string;
   variant: Variant;
 };
 
 export function Button({
-  text,
   variant = "primary",
   className,
   ...props
@@ -22,7 +20,6 @@ export function Button({
         className,
       )}
     >
-      {text}
     </button>
   );
 }
@@ -30,11 +27,13 @@ export function Button({
 function getButtonStyling(variant: Variant) {
   switch (variant) {
     case "primary":
-      return "bg-green-500 rounded px-2 py-1 hover:bg-green-400";
+      return "bg-pink-900 rounded px-2 py-1 hover:bg-pink-800";
     case "secondary":
-      return "bg-pink-600 rounded px-2 py-1 hover:bg-pink-400";
+      return "bg-zinc-600 rounded px-2 py-1 hover:bg-zinc-500";
     case "delete":
-      return "bg-orange-500 rounded px-2 py-1 hover:bg-orange-400";
+      return "bg-zinc-500 rounded px-2 py-1 hover:bg-zinc-400";
+    case "days":
+        return "bg-pink-600 rounded px-2 py-1 hover:bg-pink-500";
     default:
       console.log("No such option for button styling available");
       throw new Error(`Invalid variant ${variant}`);
